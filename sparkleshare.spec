@@ -2,7 +2,7 @@ Name:           sparkleshare
 Version:        0.2.4
 Release:        %mkrel 1
 Summary:        Easy file sharing based on git repositories
-Group:          Applications/Productivity
+Group:          Networking/File transfer 
 License:        GPLv3
 URL:            http://www.sparkleshare.org/
 Source0:        https://github.com/downloads/hbons/SparkleShare/sparkleshare-%{version}.tar.gz
