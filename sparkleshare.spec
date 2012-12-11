@@ -69,3 +69,11 @@ rm -rf %{buildroot}
 
 %doc README
 %doc %{_mandir}/man1/sparkleshare.1.*
+
+
+%changelog
+* Tue Jul 12 2011 Leonardo Coelho <leonardoc@mandriva.com> 0.2.4-1mdv2011
++ Revision: 689719
+- import package using fedora spec
+- Created package structure for sparkleshare.
+
