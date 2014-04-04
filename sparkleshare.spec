@@ -1,79 +1,48 @@
-Name:           sparkleshare
-Version:        0.2.4
-Release:        %mkrel 1
-Summary:        Easy file sharing based on git repositories
-Group:          Networking/File transfer 
-License:        GPLv3
-URL:            http://www.sparkleshare.org/
-Source0:        https://github.com/downloads/hbons/SparkleShare/sparkleshare-%{version}.tar.gz
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
-BuildRequires:  mono-devel ndesk-dbus-devel ndesk-dbus-glib-devel notify-sharp-devel
-BuildRequires:  desktop-file-utils intltool 
-BuildRequires:  gnome-doc-utils nant
-BuildRequires:  webkit-sharp-devel
-# BuildRequires:  smartirc4net-devel
-Requires:       git desktop-file-utils yelp
+Summary:	Easy file sharing based on git repositories
+Name:		sparkleshare
+Version:	1.1.0
+Release:	1
+License:	GPLv3+
+Group:		Networking/File transfer
+Url:		http://www.sparkleshare.org/
+Source0:	https://bitbucket.org/hbons/%{name}/downloads/%{name}-linux-%{version}-tar.gz
+BuildRequires:	intltool
+BuildRequires:	nant
+BuildRequires:	pkgconfig(mono)
+BuildRequires:	pkgconfig(notify-sharp)
+BuildRequires:	pkgconfig(webkit-sharp-1.0)
+Requires:	git
+Requires:	desktop-file-utils
+Requires:	yelp
 
 %description
 Easy file sharing based on git repositories. A special folder is setup,
 and directories/files placed within are placed in a git-based version
 control system and synchronized elsewhere.
 
+%files -f %{name}.lang
+%{_bindir}/%{name}
+%{_libdir}/%{name}/
+%{_datadir}/%{name}/
+%{_datadir}/applications/*.desktop
+%{_iconsdir}/gnome/scalable/apps/%{name}-symbolic.svg
+%{_iconsdir}/hicolor/*/apps/%{name}.png
+%{_iconsdir}/hicolor/*/status/*
+%{_iconsdir}/ubuntu-mono-*/status/24/process-syncing*.png
+
+#----------------------------------------------------------------------------
 
 %prep
 %setup -q
 
 %build
-%configure
+%configure --prefix=%{_prefix}
 # no parallel make on SMP because it's racy for this build :(
 GMCS_FLAGS=-codepage:utf8 make
 
 %install
-rm -rf %{buildroot}
-%{__mkdir_p} %{buildroot}%{_libdir}/mono/gac/
-make install DESTDIR=%{buildroot}
-desktop-file-validate %{buildroot}/%{_datadir}/applications/sparkleshare.desktop
+mkdir -p %{buildroot}%{_libdir}/mono/gac/
+%makeinstall_std
 
-# find translations
 %find_lang %{name}
-
-%post
-touch --no-create %{_datadir}/icons/hicolor &>/dev/null || :
-
-%postun
-if [ $1 -eq 0 ] ; then
-    touch --no-create %{_datadir}/icons/hicolor &>/dev/null
-    gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-fi
-
-%posttrans
-gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
-
-%clean
-rm -rf %{buildroot}
-
-%files -f %{name}.lang
-%defattr(-,root,root,-)
-/usr/bin/sparkleshare
-%{_libdir}/sparkleshare/
-/usr/share/sparkleshare/
-/usr/share/applications/sparkleshare.desktop
-# /usr/share/gnome/help/sparkleshare/
-/usr/share/icons/hicolor/16x16/apps/folder-sparkleshare.png
-/usr/share/icons/hicolor/22x22/apps/folder-sparkleshare.png
-/usr/share/icons/hicolor/24x24/apps/folder-sparkleshare.png
-/usr/share/icons/hicolor/256x256/apps/folder-sparkleshare.png
-/usr/share/icons/hicolor/32x32/apps/folder-sparkleshare.png
-/usr/share/icons/hicolor/48x48/apps/folder-sparkleshare.png
-/usr/share/icons/hicolor/24x24/status/process-syncing-sparkleshare-i*.png
-
-%doc README
-%doc %{_mandir}/man1/sparkleshare.1.*
-
-
-%changelog
-* Tue Jul 12 2011 Leonardo Coelho <leonardoc@mandriva.com> 0.2.4-1mdv2011
-+ Revision: 689719
-- import package using fedora spec
-- Created package structure for sparkleshare.
 
