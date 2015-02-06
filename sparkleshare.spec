@@ -1,7 +1,7 @@
 Summary:	Easy file sharing based on git repositories
 Name:		sparkleshare
 Version:	1.1.0
-Release:	1
+Release:	2
 License:	GPLv3+
 Group:		Networking/File transfer
 Url:		http://www.sparkleshare.org/
