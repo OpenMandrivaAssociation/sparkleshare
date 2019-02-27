@@ -7,7 +7,7 @@ Release:	1
 License:	GPLv3+
 Group:		Networking/File transfer
 Url:		http://www.sparkleshare.org/
-Source0:	https://github.com/hbons/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:	https://github.com/hbons/%{oname}/archive/%{version}/%{oname}-%{version}.tar.gz
 BuildRequires:	intltool
 BuildRequires:	nant
 BuildRequires:	pkgconfig(mono)
@@ -36,7 +36,7 @@ control system and synchronized elsewhere.
 #----------------------------------------------------------------------------
 
 %prep
-%setup -q
+%setup -qn %{oname}-%{version}
 
 %build
 %meson
