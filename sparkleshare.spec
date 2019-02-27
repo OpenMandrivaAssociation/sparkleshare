@@ -1,16 +1,19 @@
+%define oname SparkleShare
+
 Summary:	Easy file sharing based on git repositories
 Name:		sparkleshare
-Version:	1.1.0
-Release:	2
+Version:	3.28
+Release:	1
 License:	GPLv3+
 Group:		Networking/File transfer
 Url:		http://www.sparkleshare.org/
-Source0:	https://bitbucket.org/hbons/%{name}/downloads/%{name}-linux-%{version}-tar.gz
+Source0:	https://github.com/hbons/%{name}/archive/%{version}/%{name}-%{version}.tar.gz
 BuildRequires:	intltool
 BuildRequires:	nant
 BuildRequires:	pkgconfig(mono)
 BuildRequires:	pkgconfig(notify-sharp)
 BuildRequires:	pkgconfig(webkit-sharp-1.0)
+BuildRequires:  meson
 Requires:	git
 Requires:	desktop-file-utils
 Requires:	yelp
@@ -36,13 +39,11 @@ control system and synchronized elsewhere.
 %setup -q
 
 %build
-%configure --prefix=%{_prefix}
-# no parallel make on SMP because it's racy for this build :(
-GMCS_FLAGS=-codepage:utf8 make
+%meson
+%meson_build
 
 %install
-mkdir -p %{buildroot}%{_libdir}/mono/gac/
-%makeinstall_std
+%meson_install
 
 %find_lang %{name}
 
