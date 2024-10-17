@@ -4,7 +4,7 @@ Version:	1.1.0
 Release:	2
 License:	GPLv3+
 Group:		Networking/File transfer
-Url:		http://www.sparkleshare.org/
+Url:		https://www.sparkleshare.org/
 Source0:	https://bitbucket.org/hbons/%{name}/downloads/%{name}-linux-%{version}-tar.gz
 BuildRequires:	intltool
 BuildRequires:	nant
